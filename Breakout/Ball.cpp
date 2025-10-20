@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include "GameManager.h" // avoid cicular dependencies
+#include <iostream>
 
 Ball::Ball(sf::RenderWindow* window, float velocity, GameManager* gameManager)
     : _window(window), _velocity(velocity), _gameManager(gameManager),
@@ -40,6 +41,11 @@ void Ball::update(float dt)
         _sprite.setFillColor(sf::Color(flicker, flicker / 2, 0)); // Orange flickering color
     }
 
+    if (_isNewBall)
+    {
+        
+    }
+
     // Update position with a subtle floating-point error
     _sprite.move(_direction * _velocity * dt);
 
@@ -77,7 +83,27 @@ void Ball::update(float dt)
 
         // Adjust position to avoid getting stuck inside the paddle
         _sprite.setPosition(_sprite.getPosition().x, _gameManager->getPaddle()->getBounds().top - 2 * RADIUS);
+
+        //if (_isNewBall == true)
+        //{
+        //    _direction = sf::Vector2f(0, 0);
+        //}
     }
+
+    // Check for direction being 0 because ball isnt colliding with paddle when the direction changes.
+    //if (_direction == sf::Vector2f(0, 0))
+    //{
+
+    //    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    //    {
+    //        _direction.y = 1;
+    //        initialPos = sf::Mouse::getPosition().y;
+    //        std::cout << initialPos;
+    //        _velocity = initialPos * 5;
+    //        isColliding = false;
+    //        _isNewBall = false;
+    //    }
+    //}
 
     // collision with bricks
     int collisionResponse = _gameManager->getBrickManager()->checkCollision(_sprite, _direction);
@@ -113,4 +139,17 @@ void Ball::setFireBall(float duration)
     }
     _isFireBall = false;
     _timeWithPowerupEffect = 0.f;    
+}
+
+void Ball::setNewBall()
+{
+
+    _isNewBall = true;
+
+    if (_isNewBall == true && isColliding == true)
+    {
+        _isNewBall = false;
+        isColliding = false;
+    }
+
 }

@@ -13,6 +13,19 @@ Paddle::~Paddle()
 {
 }
 
+void Paddle::setFreeMove()
+{
+    //if (duration)
+    //{
+    //    _isFreeMove = true;
+    //    _powerUpTimer = duration;
+    //    return;
+    //}
+    _isFreeMove = true;
+    //_isFreeMove = false;
+    //_powerUpTimer = 0.f;
+}
+
 void Paddle::moveLeft(float dt)
 {
     float position = _sprite.getPosition().x;
@@ -31,6 +44,11 @@ void Paddle::moveRight(float dt)
     {
         _sprite.move(sf::Vector2f(dt * PADDLE_SPEED, 0));
     }
+}
+
+void Paddle::freeMove(float dt)
+{
+    _sprite.setPosition(sf::Vector2f(sf::Mouse::getPosition().x - 550, sf::Mouse::getPosition().y - 100));
 }
 
 void Paddle::update(float dt)
