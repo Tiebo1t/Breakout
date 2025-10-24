@@ -26,7 +26,7 @@ private:
     bool _isNewBall;
     bool isColliding;
     float _timeWithPowerupEffect;
-    float initialPos;
+    sf::Vector2f initialPos;
 
     GameManager* _gameManager;  // Reference to the GameManager
 

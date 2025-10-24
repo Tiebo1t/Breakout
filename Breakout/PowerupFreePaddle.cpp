@@ -4,6 +4,9 @@ PowerupFreePaddle::PowerupFreePaddle(sf::RenderWindow* window, Paddle* paddle, B
     : PowerupBase(window, paddle, ball)
 {
     _sprite.setFillColor(ballEffectsColour);
+    _ball = ball;
+    _paddle = paddle;
+    _window = window;
 }
 
 PowerupFreePaddle::~PowerupFreePaddle()
