@@ -15,6 +15,8 @@ public:
     void freeMove(float dt);
     void update(float dt);
     void render();
+    float getPaddleWidth();
+    float getPaddleHeight();
     sf::Vector2f getPaddlePos();
     bool getFreeMove();
     sf::FloatRect getBounds() const;

@@ -24,9 +24,10 @@ private:
     bool _isAlive;
     bool _isFireBall;
     bool _isNewBall;
+    bool _ballOnPaddle;
     bool isColliding;
     float _timeWithPowerupEffect;
-    sf::Vector2f initialPos;
+    sf::Vector2f mousePos;
 
     GameManager* _gameManager;  // Reference to the GameManager
 

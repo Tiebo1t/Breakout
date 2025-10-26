@@ -17,15 +17,7 @@ Paddle::~Paddle()
 
 void Paddle::setFreeMove()
 {
-    //if (duration)
-    //{
-    //    _isFreeMove = true;
-    //    _powerUpTimer = duration;
-    //    return;
-    //}
     _isFreeMove = true;
-    //_isFreeMove = false;
-    //_powerUpTimer = 0.f;
 }
 
 void Paddle::moveLeft(float dt)
@@ -70,8 +62,19 @@ void Paddle::render()
     _window->draw(_sprite);
 }
 
+float Paddle::getPaddleWidth()
+{
+    return PADDLE_WIDTH;
+}
+
+float Paddle::getPaddleHeight()
+{
+    return PADDLE_HEIGHT;
+}
+
 sf::Vector2f Paddle::getPaddlePos()
 {
+    //std::cout << "sprite pos: " << sf::Vector2f(_sprite.getPosition()).x << sf::Vector2f(_sprite.getPosition()).y << std::endl;
     return sf::Vector2f(_sprite.getPosition());
 }
 

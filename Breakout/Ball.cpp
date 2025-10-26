@@ -44,11 +44,6 @@ void Ball::update(float dt)
         _sprite.setFillColor(sf::Color(flicker, flicker / 2, 0)); // Orange flickering color
     }
 
-    if (_isNewBall)
-    {
-        
-    }
-
     // Update position with a subtle floating-point error
     _sprite.move(_direction * _velocity * dt);
 
@@ -89,33 +84,42 @@ void Ball::update(float dt)
 
         if (_isNewBall == true)
         {
+            _ballOnPaddle = true;
             _direction = sf::Vector2f(0, 0);
-
         }
-        //else if (_isNewBall == true && _gameManager->getPaddle()->getFreeMove() == true && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        //{
-        //    _velocity = 3;
-        //    _direction.y = 1;
-        //}
     }
 
-    if (_direction == sf::Vector2f(0, 0))
+    if (_ballOnPaddle == true)
     {
+        _sprite.setPosition(_gameManager->getPaddle()->getPaddlePos().x + _gameManager->getPaddle()->getPaddleWidth() / 2, _gameManager->getPaddle()->getPaddlePos().y - _gameManager->getPaddle()->getPaddleHeight());
 
-        //std::cout << "mouse " << sf::Mouse::getPosition(*_window).y << "paddle " << _gameManager->getPaddle()->getPaddlePos().y;
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //&& sf::Mouse::getPosition(*_window).y > _gameManager->getPaddle()->getPaddlePos().y
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            initialPos = sf::Vector2f(sf::Mouse::getPosition(*_window).x, sf::Mouse::getPosition(*_window).y);
-            std::cout << initialPos.x * 0.001f << " " << initialPos.y * 0.001f;
-            _direction.x = atan(initialPos.x - _sprite.getPosition().x); // initialpos * 0.001f
-            _direction.y = atan(initialPos.y - _sprite.getPosition().y);
-            _velocity = 10;
-            isColliding = false;
-            _isNewBall = false;
+            if (_direction == sf::Vector2f(0, 0) && _gameManager->getPaddle()->getFreeMove() == false)
+            {
+
+                //if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                //{
+                mousePos = sf::Vector2f(sf::Mouse::getPosition(*_window).x, sf::Mouse::getPosition(*_window).y);
+                std::cout << mousePos.x * 0.001f << " " << mousePos.y * 0.001f;
+                _direction.x = atan(mousePos.x - _sprite.getPosition().x);
+                _direction.y = atan(mousePos.y - _sprite.getPosition().y);
+                _velocity = 7;
+                isColliding = false;
+                _ballOnPaddle = false;
+                _isNewBall = false;
+                //}
+            }
+            else if (_direction == sf::Vector2f(0, 0) && _gameManager->getPaddle()->getFreeMove() == true)
+            {
+                _velocity = 3;
+                _direction.y = 1;
+                isColliding = false;
+                _ballOnPaddle = false;
+                _isNewBall = false;
+            }
         }
     }
-
-
 
     // collision with bricks
     int collisionResponse = _gameManager->getBrickManager()->checkCollision(_sprite, _direction);
@@ -158,7 +162,7 @@ void Ball::setNewBall()
 
     _isNewBall = true;
 
-    if (_isNewBall == true && isColliding == true)
+    if (_isNewBall == true && isColliding == true) 
     {
         _isNewBall = false;
         isColliding = false;

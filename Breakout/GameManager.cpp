@@ -71,7 +71,7 @@ void GameManager::update(float dt)
     _time += dt;
 
 
-    if (_time > _timeLastPowerupSpawned + POWERUP_FREQUENCY && rand()%700 == 0)      // TODO parameterise
+    if (_time > _timeLastPowerupSpawned + POWERUP_FREQUENCY && rand()%700 == 0)      
     {
         _powerupManager->spawnPowerup();
         _timeLastPowerupSpawned = _time;
@@ -92,8 +92,6 @@ void GameManager::loseLife()
 {
     _lives--;
     _ui->lifeLost(_lives);
-
-    // TODO screen shake.
 }
 
 void GameManager::render()
